@@ -1,0 +1,12 @@
+    int findKthLargest(vector<int>& nums, int k) {
+        /*Create min heap, minimum of all present element will be pointed by top*/
+        priority_queue<int,vector<int>,greater<int>> pq;
+        
+        for (auto i:nums) {
+            pq.push(i);
+            /*if size becomes more than k deleted minimum of k+1 elements. Thus, only k largest of elements pushed till now remains.*/
+            if (pq.size() > k) pq.pop();
+        }
+        
+        return pq.top();
+    }
