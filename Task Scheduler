@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int count[26];
+        fill(count, count + 26, 0);        
+        
+        //Store frequency of each letter
+        for (char ch: tasks) {
+            count[ch -'A'] += 1;
+        }
+        
+        priority_queue<int> pq;
+        
+        //push frequency in max heap
+        for (int i:count) {
+            if (i >0) pq.push(i);
+        }
+        
+        //Basically we are creating subarray of size n+1. It will be multiplied by most frequent task.
+        int res = 0;
+        while (!pq.empty()) {
+            int time = 0;
+            vector<int> temp;
+            for (int i=0; i< n+1; i++) {
+                if (!pq.empty()) {
+                    int ele = pq.top();
+                    pq.pop();
+                    temp.push_back(ele-1);
+                    time++;
+                }
+            }
+            
+            for (int t: temp) {
+                if (t) pq.push(t);
+            }
+            
+            int add = (pq.empty()) ? time: n+1;
+            res += add;
+        }
+        
+        return res;
+        
+    }
+};
