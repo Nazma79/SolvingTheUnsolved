@@ -1,0 +1,27 @@
+/**You are given the root of a binary tree containing digits from 0 to 9 only.
+***Each root-to-leaf path in the tree represents a number.
+***For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
+***Return the total sum of all root-to-leaf numbers*/
+
+
+class Solution {
+public:
+    
+    int sum =0;
+    void SumUtil(TreeNode* root, string s) {
+        if (root == NULL) return;
+        if (!root->left && !root->right) {
+            sum += stoi(s);
+            return;
+        }
+        
+        if (root->left) SumUtil(root->left, s+to_string(root->left->val));
+        if (root->right) SumUtil(root->right, s+to_string(root->right->val));
+    }
+    int sumNumbers(TreeNode* root) {
+        if (root == NULL) return -1;
+        SumUtil(root,to_string(root->val));
+        
+        return sum;
+    }
+};
